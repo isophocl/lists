@@ -28,9 +28,14 @@ public class MyLinkedList<E> {
      * @param index
      * @return
      */
+
 	public E get(int index) {
-		return null;
-	}
+        MyLinkedNode<E> current = head;
+        for (int i = 0 ; i <= index ; i++) {
+            current = current.getNext();
+        }
+        return current.getValue();
+    }
 
     /**
      * Adds a new element to the end of the list:
@@ -38,6 +43,11 @@ public class MyLinkedList<E> {
      * @param elem
      */
 	public void add(E elem) {
+        MyLinkedNode<E> newNode = new MyLinkedNode<>(elem);
+        MyLinkedNode<E> temp = tail.getPrev();
+        tail.setPrev(newNode);
+        temp.setNext(newNode);
+        numElements++;
 	}
 
     /**
@@ -46,7 +56,21 @@ public class MyLinkedList<E> {
      * @param elem
      */
 	public void add(int i, E elem) {
-	}
+            if (i < 0 || i > numElements) throw new IndexOutOfBoundsException();
+
+            // if asked to add to end, let the other add method do the work
+            if (i == numElements) add(elem);
+
+            // find the node n after which to add a new node and add the new node
+            MyLinkedNode<E> temp = head;
+            for (int k=0; k<i; k++) temp = temp.getNext(); {
+
+            MyLinkedNode<E> newNode = new MyLinkedNode<>(elem);
+            newNode.setNext(temp.getNext());
+            temp.setNext(newNode);
+        }
+        numElements++;
+    }
 
     /**
      * Returns the current size of the list.
